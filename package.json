@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/bayubagusbagaswara/bookshelf-api/issues"
   },
-  "homepage": "https://github.com/bayubagusbagaswara/bookshelf-api#readme"
+  "homepage": "https://github.com/bayubagusbagaswara/bookshelf-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
