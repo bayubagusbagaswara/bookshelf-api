@@ -61,7 +61,7 @@ const addBookHandler = (request, h) => {
       status: 'success',
       message: 'Buku berhasil ditambahkan',
       data: {
-        noteId: id,
+        bookId: id,
       },
     });
     response.code(201);
@@ -117,7 +117,7 @@ const getAllBooksHandler = (request, h) => {
 
     // filter buku yang mengandung nama berdasarkan nilai yang diberikan pada query
     if (name) {
-      filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase));
+      filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
     }
     // filter buku yang sedang dibaca
     if (reading) {
