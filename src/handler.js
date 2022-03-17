@@ -229,6 +229,33 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 
+const deleteBookByIdHandler = (request, h) => {
+  // tangkap parameter berupa id dari request user
+  const { id } = request.params;
+
+  // cari book berdasarkan id
+  const index = books.findIndex((book) => book.id === id);
+
+  // jika book ditemukan, maka hapus book dan balikan response success
+  if (index !== -1) {
+    books.splice(index, 1);
+    const response = h.response({
+      status: 'success',
+      message: 'Buku berhasil dihapus',
+    });
+    response.code(200);
+    return response;
+  }
+
+  // jika book tidak ditemukan, maka gagal menghapus book dan balikan response fail
+  const response = h.response({
+    status: 'fail',
+    message: 'Buku gagal dihapus. Id tidak ditemukan',
+  });
+  response.code(404);
+  return response;
+};
+
 module.exports = {
-  addBookHandler, getBookByIdHandler, getAllBooksHandler, editBookByIdHandler,
+  addBookHandler, getBookByIdHandler, getAllBooksHandler, editBookByIdHandler, deleteBookByIdHandler,
 };
