@@ -105,4 +105,52 @@ const getBookByIdHandler = (request, h) => {
   return response;
 };
 
-module.exports = { addBookHandler, getBookByIdHandler };
+const getAllBooksHandler = (request, h) => {
+  // tangkap data dari query parameter
+  const { name, reading, finished } = request.query;
+
+  // cek apakah array books ada isinya atau tidak
+  // jika ada isinya, maka kita lakukan validasi terhadap masing-masing nilai dari query parameternya, lalu balikan response berisi data id, name, publisher
+  if (books.length > 0) {
+    // variable filteredBook yang di assign dari array books
+    let filteredBooks = books;
+
+    // filter buku yang mengandung nama berdasarkan nilai yang diberikan pada query
+    if (name) {
+      filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase));
+    }
+    // filter buku yang sedang dibaca
+    if (reading) {
+      filteredBooks = filteredBooks.filter((book) => Number(book.reading) === Number(reading));
+    }
+    // filter buku yang sudah selesai dibaca
+    if (finished) {
+      filteredBooks = filteredBooks.filter((book) => Number(book.finished) === Number(finished));
+    }
+    // response data
+    const response = h.response({
+      status: 'success',
+      data: {
+        books: filteredBooks.map((book) => ({
+          id: book.id,
+          name: book.name,
+          publisher: book.publisher,
+        })),
+      },
+    });
+    response.code(200);
+    return response;
+  }
+
+  // jika array books belum ada isinya, maka kita balikan response berupa array kosong []
+  const response = h.response({
+    status: 'success',
+    data: {
+      books: [],
+    },
+  });
+  response.code(200);
+  return response;
+};
+
+module.exports = { addBookHandler, getBookByIdHandler, getAllBooksHandler };
